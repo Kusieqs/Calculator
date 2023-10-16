@@ -5,8 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="560" Width="350">
 
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFD8CE89" Offset="0.057"/>
+                <GradientStop Color="#FF821919" Offset="0.87"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="One" Content="1" Grid.Row="4" Grid.Column="0" FontSize="40" FontWeight="SemiBold" Margin="7,7,7,7" Background="#FF565252" Foreground="White"/>
+        <Button x:Name="Two" Content="2" Grid.Row="4" Grid.Column="1" FontSize="40" FontWeight ="SemiBold" Margin="7,7,7,7" Background="#FF565252" Foreground="White"/>
+        <Button x:Name="Three" Content="3" Grid.Row="4" Grid.Column="2" FontSize="40" FontWeight="SemiBold" Margin="7,7,7,7" Background="#FF565252" Foreground="White"/>
+        <Button x:Name="Four" Content="4" Grid.Row="3" Grid.Column="0" FontSize="40" FontWeight="SemiBold" Margin="7,7,7,7" Background="#FF565252" Foreground="White"/>
+        <Button x:Name="Five" Content="5" Grid.Row="3" Grid.Column="1" FontSize="40" FontWeight="SemiBold" Margin="7,7,7,7" Background="#FF565252" Foreground="White"/>
+        <Button x:Name="Six" Content="6" Grid.Row="3" Grid.Column="2" FontSize="40" FontWeight="SemiBold" Margin="7,7,7,7" Background="#FF565252" Foreground="White"/>
+        <Button x:Name="Seven" Content="7" Grid.Row="2" Grid.Column="0" FontSize="40" FontWeight="SemiBold" Margin="7,7,7,7" Background="#FF565252" Foreground="White"/>
+        <Button x:Name="Eight" Content="8" Grid.Row="2" Grid.Column="1" FontSize="40" FontWeight="SemiBold" Margin="7,7,7,7" Background="#FF565252" Foreground="White"/>
+        <Button x:Name="Nine" Content="9" Grid.Row="2" Grid.Column="2" FontSize="40" FontWeight="SemiBold" Margin="7,7,7,7" Background="#FF565252" Foreground="White"/>
+        <Button x:Name="Zero" Content="0" Grid.Row="5" Grid.Column="0" FontSize="40" FontWeight="SemiBold" Grid.ColumnSpan="2" Margin="7,7,7,7" Background="#FF565252" Foreground="White"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="TEst" FontSize="60" TextAlignment="Right" VerticalAlignment="Center" Margin="7,7,7,7" Foreground="Black"/>
+        <Button x:Name="C" Content="C" Grid.Column="0" Grid.Row="1" FontSize ="40" FontWeight="Bold" Margin="7,7,7,7" Background="#FF5B3A3A" Foreground="White"/>
+        <Button x:Name="," Content="," Grid.Column="2" Grid.Row="5" FontSize ="40" FontWeight="Bold" Margin="7,7,7,7" Background="#FF5B3A3A" Foreground="White"/>
+        <Button x:Name="=" Content="=" Grid.Column="3" Grid.Row="5" FontSize="40" FontWeight="Bold" Margin="7,7,7,7" Background="#FF5B3A3A" Foreground="White"/>
+        <Button x:Name="+" Content="+" Grid.Column="3" Grid.Row="4" FontSize="40" FontWeight="Bold" Margin="7,7,7,7" Background="#FF5B3A3A" Foreground="White"/>
+        <Button x:Name="-" Content="-" Grid.Column="3" Grid.Row="3" FontSize="40" FontWeight="Bold" Margin="7,7,7,7" Background="#FF5B3A3A" Foreground="White"/>
+        <Button x:Name="x" Content="x" Grid.Column="3" Grid.Row="2" FontSize="40" FontWeight="Bold" Margin="7,7,7,7" Background="#FF5B3A3A" Foreground="White" />
+        <Button x:Name="/" Content="/" Grid.Column="3" Grid.Row="1" FontSize ="40" FontWeight="Bold" Margin="7,7,7,7" Background="#FF5B3A3A" Foreground="White"/>
+        <Button x:Name="√" Content="√" Grid.Column="1" Grid.Row="1" FontSize="40" FontWeight="Bold" Margin="7,7,7,7" Background="#FF5B3A3A" Foreground="White"/>
+        <Button x:Name="+/-" Content="+/-" Grid.Column="2" Grid.Row="1" FontSize="40" FontWeight="Bold" Margin="7,7,7,7" Background="#FF5B3A3A" Foreground="White"/>
     </Grid>
 </Window>
