@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="MainWindow" Height="560" Width="350">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="One" Content="1" Grid.Row="4" Grid.Column="0" FontSize="40" FontWeight="SemiBold" />
+        <Button x:Name="Two" Content="2" Grid.Row="4" Grid.Column="1" FontSize="40" FontWeight ="SemiBold" />
+        <Button x:Name="Three" Content="3" Grid.Row="4" Grid.Column="2" FontSize="40" FontWeight="SemiBold" />
+        <Button x:Name="Four" Content="4" Grid.Row="3" Grid.Column="0" FontSize="40" FontWeight="SemiBold" />
+        <Button x:Name="Five" Content="5" Grid.Row="3" Grid.Column="1" FontSize="40" FontWeight="SemiBold" />
+        <Button x:Name="Six" Content="6" Grid.Row="3" Grid.Column="2" FontSize="40" FontWeight="SemiBold" />
+        <Button x:Name="Seven" Content="7" Grid.Row="2" Grid.Column="0" FontSize="40" FontWeight="SemiBold" />
+        <Button x:Name="Eight" Content="8" Grid.Row="2" Grid.Column="1" FontSize="40" FontWeight="SemiBold" />
+        <Button x:Name="Nine" Content="9" Grid.Row="2" Grid.Column="2" FontSize="40" FontWeight="SemiBold" />
+        <Button x:Name="Zero" Content="0" Grid.Row="5" Grid.Column="0" FontSize="40" FontWeight="SemiBold" Grid.ColumnSpan="2"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="TEst" FontSize="60" TextAlignment="Right" VerticalAlignment="Center"/>
+        <Button x:Name="C" Content="C" Grid.Column="0" Grid.Row="1" FontSize ="40" FontWeight="Bold"/>
+        <Button x:Name="," Content="," Grid.Column="2" Grid.Row="5" FontSize ="40" FontWeight="Bold"/>
+        <Button x:Name="=" Content="=" Grid.Column="3" Grid.Row="5" FontSize="40" FontWeight="Bold"/>
+        <Button x:Name="+" Content="+" Grid.Column="3" Grid.Row="4" FontSize="40" FontWeight="Bold"/>
+        <Button x:Name="-" Content="-" Grid.Column="3" Grid.Row="3" FontSize="40" FontWeight="Bold"/>
+        <Button x:Name="x" Content="x" Grid.Column="3" Grid.Row="2" FontSize="40" FontWeight="Bold"/>
+        <Button x:Name="/" Content="/" Grid.Column="3" Grid.Row="1" FontSize ="40" FontWeight="Bold"/>
+        
     </Grid>
 </Window>
