@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
@@ -20,8 +21,10 @@ namespace Calculator
     /// </summary>
     public partial class MainWindow : Window
     {
-        string oldOutput = "";
+        string readOutput = "";
         string output = "";
+
+        string operation = "";
         public MainWindow()
         {
             InitializeComponent();
@@ -83,57 +86,28 @@ namespace Calculator
         }
         private void Clear(object sender, RoutedEventArgs e)
         {
-            oldOutput = "";
+            readOutput = "";
             output = "";
             OutputTextBlock.Text = "0";
-            TextToRead.Text = oldOutput;
+            TextToRead.Text = "0";
         }
-        private void Plus(object sender, RoutedEventArgs e)
-        {
-            if(oldOutput == "")
-            {
-                oldOutput = output + " +";
-                TextToRead.Text = oldOutput;
-                output = "";
-                OutputTextBlock.Text = "0";
-            }
-            else
-            {
-                string[] numbers = oldOutput.Split(' ');
-                double oldData = double.Parse(numbers[0]);
-                double newData = double.Parse(output);
-                oldOutput = (oldData+newData).ToString() + " +";
-                TextToRead.Text = oldOutput;
-                output = "";
-                OutputTextBlock.Text = "0";
-            }
-        }
-        private void Minus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Element(object sender, RoutedEventArgs e)
         {
-
+            double sqrtTwo = double.Parse(OutputTextBlock.Text);
+            sqrtTwo = Math.Sqrt(sqrtTwo);
+            OutputTextBlock.Text = Math.Round(sqrtTwo,2).ToString();
         }
 
         private void MinusOrPlus(object sender, RoutedEventArgs e)
         {
-
+            if (OutputTextBlock.Text != "0")
+            {
+                double parse = double.Parse(OutputTextBlock.Text);
+                parse = parse * -1;
+                OutputTextBlock.Text = parse.ToString();
+                output = parse.ToString();
+            }
         }
-
-        private void Division(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Multiplication(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
 
         private void Equal(object sender, RoutedEventArgs e)
         {
@@ -142,7 +116,73 @@ namespace Calculator
 
         private void Comma(object sender, RoutedEventArgs e)
         {
+            output += ',';
+            OutputTextBlock.Text = output;
+        }
 
+        private void NumberEqual(object sender, RoutedEventArgs e)
+        {
+
+            string[] numbers = TextToRead.Text.Split(' ');
+            if (numbers.Length == 2)
+            {
+                double oldData = double.Parse(numbers[0]);
+                double newData = double.Parse(output);
+                switch (operation)
+                {
+                    case "plus":
+                        readOutput = (oldData + newData).ToString();
+                        break;
+                    case "minus":
+                        readOutput = (oldData - newData).ToString();
+                        break;
+                    case "division":
+                        readOutput = (oldData / newData).ToString();
+                        break;
+                    case "multiplication":
+                        readOutput = (oldData * newData).ToString();
+                        break;
+                }
+
+                switch(((Button)sender).Name)
+                {
+                    case "plus":
+                        readOutput += " +";
+                        break;
+                    case "minus":
+                        readOutput += " -";
+                        break;
+                    case "division":
+                        readOutput += " /";
+                        break;
+                    case "multiplication":
+                        readOutput += " x";
+                        break;
+                }
+            }
+            else
+            {
+                switch(((Button)sender).Name)
+                {
+                    case "plus":
+                        readOutput = OutputTextBlock.Text + " +";
+                        break;
+                    case "minus":
+                        readOutput = OutputTextBlock.Text + " -";
+                        break;
+                    case "division":
+                        readOutput = OutputTextBlock.Text + " /";
+                        break;
+                    case "multiplication":
+                        readOutput = OutputTextBlock.Text + " x";
+                        break;
+                }
+            }
+            
+            TextToRead.Text = readOutput;
+            output = "";
+            OutputTextBlock.Text = "0";
+            operation = ((Button)sender).Name;
         }
     }
 }
