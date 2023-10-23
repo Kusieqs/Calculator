@@ -83,9 +83,16 @@ namespace Calculator
         }
         private void Element(object sender, RoutedEventArgs e)
         {
-            double sqrtTwo = double.Parse(OutputTextBlock.Text);
-            sqrtTwo = Math.Sqrt(sqrtTwo);
-            OutputTextBlock.Text = Math.Round(sqrtTwo,2).ToString();
+            if(double.Parse(OutputTextBlock.Text) >=0)
+            {
+                double sqrtTwo = double.Parse(OutputTextBlock.Text);
+                sqrtTwo = Math.Sqrt(sqrtTwo);
+                OutputTextBlock.Text = Math.Round(sqrtTwo, 2).ToString();
+            }
+            else
+            {
+                MessageBox.Show("You can't element a minus number", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void MinusOrPlus(object sender, RoutedEventArgs e)
@@ -109,22 +116,20 @@ namespace Calculator
         {
             string[] numbers = TextToRead.Text.Split(' ');
             string equal = ((Button)sender).Name;
-
+            string historyOutPut = TextToRead.Text;
             double a = double.Parse(numbers[0]);
             double b = double.Parse(OutputTextBlock.Text);
 
             if(equal == "equal")
             {
-                if(numbers.Length < 2)
+                if(numbers.Length < 2 && TextToRead.Text != "0")
                 {
-                    if(TextToRead.Text != "0")
-                    {
-                        OutputTextBlock.Text = numbers[0];
-                        output = numbers[0];
-                    }
+                     OutputTextBlock.Text = numbers[0];
+                     output = numbers[0];
                 }
                 else
                 {
+
                     switch(numbers[1])
                     {
                         case "+":
@@ -147,9 +152,15 @@ namespace Calculator
                             output = (a / b).ToString();
                             break;
                     }
-                    OutputTextBlock.Text = output;
+
+                    if (output.Length < 12)
+                        OutputTextBlock.Text = output;
+                    else
+                        output = historyOutPut;
+
                     readOutput = "0";
                     TextToRead.Text = readOutput;
+
                 }
             }
             else
@@ -213,11 +224,17 @@ namespace Calculator
                     }
                 }
 
-                TextToRead.Text = readOutput;
+                if(readOutput.Length < 12)
+                {
+                    TextToRead.Text = readOutput;
+                    OutputTextBlock.Text = "0";
+                }
+                else
+                {
+                    TextToRead.Text = historyOutPut;
+                }
                 output = "";
-                OutputTextBlock.Text = "0";
                 operation = ((Button)sender).Name;
-
             }
         }
     }
