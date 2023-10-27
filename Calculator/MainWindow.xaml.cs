@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace Calculator
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         string readOutput = "";
@@ -34,54 +32,45 @@ namespace Calculator
         {
             
             string name = ((Button)sender).Name;
-            if (output.Length < 8)
+            if (output.Length <= 8)
             {
                 switch (name)
                 {
                     case "One":
                         output += "1";
-                        OutputTextBlock.Text = output;
                         break;
                     case "Two":
                         output += "2";
-                        OutputTextBlock.Text = output;
                         break;
                     case "Three":
                         output += "3";
-                        OutputTextBlock.Text = output;
                         break;
                     case "Four":
                         output += "4";
-                        OutputTextBlock.Text = output;
                         break;
                     case "Five":
                         output += "5";
-                        OutputTextBlock.Text = output;
                         break;
                     case "Six":
                         output += "6";
-                        OutputTextBlock.Text = output;
                         break;
                     case "Seven":
                         output += "7";
-                        OutputTextBlock.Text = output;
                         break;
                     case "Eight":
                         output += "8";
-                        OutputTextBlock.Text = output;
                         break;
                     case "Nine":
                         output += "9";
-                        OutputTextBlock.Text = output;
                         break;
                     case "Zero":
                         output += "0";
-                        OutputTextBlock.Text = output;
                         break;
 
 
                 }
-
+                output = Convert.ToDouble(output).ToString();
+                OutputTextBlock.Text = output;
             }
         }
         private void Clear(object sender, RoutedEventArgs e)
@@ -93,13 +82,22 @@ namespace Calculator
         }
         private void Element(object sender, RoutedEventArgs e)
         {
-            double sqrtTwo = double.Parse(OutputTextBlock.Text);
-            sqrtTwo = Math.Sqrt(sqrtTwo);
-            OutputTextBlock.Text = Math.Round(sqrtTwo,2).ToString();
+            if(double.Parse(OutputTextBlock.Text) >=0)
+            {
+                double sqrtTwo = double.Parse(OutputTextBlock.Text);
+                sqrtTwo = Math.Sqrt(sqrtTwo);
+                OutputTextBlock.Text = Math.Round(sqrtTwo, 2).ToString();
+                output = OutputTextBlock.Text;
+            }
+            else
+            {
+                MessageBox.Show("You can't element a minus number", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void MinusOrPlus(object sender, RoutedEventArgs e)
         {
+
             if (OutputTextBlock.Text != "0")
             {
                 double parse = double.Parse(OutputTextBlock.Text);
@@ -109,80 +107,159 @@ namespace Calculator
             }
         }
 
-        private void Equal(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Comma(object sender, RoutedEventArgs e)
         {
-            output += ',';
-            OutputTextBlock.Text = output;
+            if (OutputTextBlock.Text.Length < 9 && !OutputTextBlock.Text.Contains(',')) 
+            {
+                output += ',';
+                OutputTextBlock.Text = output;
+            }
         }
 
+        private string ConvertComma(string number)
+        {
+            if (number[number.Length - 1] == ',')
+                number = number.Remove(number.Length - 1);
+            return number;
+        }
         private void NumberEqual(object sender, RoutedEventArgs e)
         {
+            if(output != "")
+            {
+                string convertedNumber = ConvertComma(output);
+                output = convertedNumber;
+            }
+            else
+            {
+                output = "0";
+            }
 
             string[] numbers = TextToRead.Text.Split(' ');
-            if (numbers.Length == 2)
-            {
-                double oldData = double.Parse(numbers[0]);
-                double newData = double.Parse(output);
-                switch (operation)
-                {
-                    case "plus":
-                        readOutput = (oldData + newData).ToString();
-                        break;
-                    case "minus":
-                        readOutput = (oldData - newData).ToString();
-                        break;
-                    case "division":
-                        readOutput = (oldData / newData).ToString();
-                        break;
-                    case "multiplication":
-                        readOutput = (oldData * newData).ToString();
-                        break;
-                }
+            string equal = ((Button)sender).Name;
+            string historyOutPut = numbers[0];
+            double a = double.Parse(numbers[0]);
+            double b = double.Parse(OutputTextBlock.Text);
 
-                switch(((Button)sender).Name)
+            if(equal == "equal")
+            {
+                if(numbers.Length < 2 || TextToRead.Text == "0")
                 {
-                    case "plus":
-                        readOutput += " +";
-                        break;
-                    case "minus":
-                        readOutput += " -";
-                        break;
-                    case "division":
-                        readOutput += " /";
-                        break;
-                    case "multiplication":
-                        readOutput += " x";
-                        break;
+                    output = "0";
+                    OutputTextBlock.Text = output;
+                    return;
+                }
+                else
+                {
+
+                    switch(numbers[1])
+                    {
+                        case "+":
+                            readOutput = (a + b).ToString();
+                            break;
+                        case "-":
+                            readOutput = (a - b).ToString();
+                            break;
+                        case "x":
+                            readOutput = (a * b).ToString();
+                            break;
+                        case "/":
+                            if (double.Parse(OutputTextBlock.Text) == 0)
+                            {
+                                MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                output = "";
+                                return;
+                            }
+
+                            readOutput = (a / b).ToString();
+                            break;
+                    }
+
+                    if (readOutput.Length < 18)
+                        TextToRead.Text = readOutput;
+                    else
+                        readOutput = historyOutPut;
+
+                    output = "0";
+                    OutputTextBlock.Text = output;
+
                 }
             }
             else
             {
-                switch(((Button)sender).Name)
+                if (numbers.Length == 2)
                 {
-                    case "plus":
-                        readOutput = OutputTextBlock.Text + " +";
-                        break;
-                    case "minus":
-                        readOutput = OutputTextBlock.Text + " -";
-                        break;
-                    case "division":
-                        readOutput = OutputTextBlock.Text + " /";
-                        break;
-                    case "multiplication":
-                        readOutput = OutputTextBlock.Text + " x";
-                        break;
+                    switch (operation)
+                    {
+                        case "plus":
+                            readOutput = (a + b).ToString();
+                            break;
+                        case "minus":
+                            readOutput = (a - b).ToString();
+                            break;
+                        case "division":
+                            if (double.Parse(OutputTextBlock.Text) == 0)
+                            {
+                                MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                output = "";
+                                return;
+                            }
+                            readOutput = (a / b).ToString();
+                            break;
+                        case "multiplication":
+                            readOutput = (a * b).ToString();
+                            break;
+                    }
+
+                    switch (((Button)sender).Name)
+                    {
+                        case "plus":
+                            readOutput += " +";
+                            break;
+                        case "minus":
+                            readOutput += " -";
+                            break;
+                        case "division":
+                            readOutput += " /";
+                            break;
+                        case "multiplication":
+                            readOutput += " x";
+                            break;
+                    }
                 }
+                else
+                {
+                    switch (((Button)sender).Name)
+                    {
+                        case "plus":
+                            readOutput = output.ToString() + " +";
+                            break;
+                        case "minus":
+                            readOutput = output.ToString() + " -";
+                            break;
+                        case "division":
+                            readOutput = output.ToString() + " /";
+                            break;
+                        case "multiplication":
+                            readOutput = output.ToString() + " x";
+                            break;
+                    }
+                }
+
+                if(readOutput.Length <= 17)
+                {
+                    TextToRead.Text = readOutput;
+                    OutputTextBlock.Text = "0";
+                }
+                else
+                {
+                    TextToRead.Text = historyOutPut;
+                    readOutput = historyOutPut;
+                    MessageBox.Show("Length of numbers are to big", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    OutputTextBlock.Text = "0";
+                }
+                output = "0";
+                operation = ((Button)sender).Name;
             }
-            
-            TextToRead.Text = readOutput;
-            output = "";
-            OutputTextBlock.Text = "0";
-            operation = ((Button)sender).Name;
         }
     }
 }
