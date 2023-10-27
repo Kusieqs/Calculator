@@ -32,7 +32,7 @@ namespace Calculator
         {
             
             string name = ((Button)sender).Name;
-            if (output.Length < 8)
+            if (output.Length <= 9)
             {
                 switch (name)
                 {
@@ -71,7 +71,7 @@ namespace Calculator
                 }
                 output = Convert.ToDouble(output).ToString();
                 OutputTextBlock.Text = output;
-
+                /// max 9 liczb
             }
         }
         private void Clear(object sender, RoutedEventArgs e)
@@ -88,6 +88,7 @@ namespace Calculator
                 double sqrtTwo = double.Parse(OutputTextBlock.Text);
                 sqrtTwo = Math.Sqrt(sqrtTwo);
                 OutputTextBlock.Text = Math.Round(sqrtTwo, 2).ToString();
+                output = OutputTextBlock.Text;
             }
             else
             {
@@ -97,7 +98,8 @@ namespace Calculator
 
         private void MinusOrPlus(object sender, RoutedEventArgs e)
         {
-            if (OutputTextBlock.Text != "0")
+
+            if (OutputTextBlock.Text != "0" && OutputTextBlock.Text.Length < 10)
             {
                 double parse = double.Parse(OutputTextBlock.Text);
                 parse = parse * -1;
@@ -108,24 +110,44 @@ namespace Calculator
 
         private void Comma(object sender, RoutedEventArgs e)
         {
-            output += ',';
-            OutputTextBlock.Text = output;
+            if(OutputTextBlock.Text.Length < 9)
+            {
+                output += ',';
+                OutputTextBlock.Text = output;
+            }
         }
 
+        private string ConvertComma(string number)
+        {
+            if (number[number.Length - 1] == ',')
+                number = number.Remove(number.Length - 1);
+            return number;
+        }
         private void NumberEqual(object sender, RoutedEventArgs e)
         {
+            if(output != "")
+            {
+                string convertedNumber = ConvertComma(output);
+                output = convertedNumber;
+            }
+            else
+            {
+                output = "0";
+            }
+
             string[] numbers = TextToRead.Text.Split(' ');
             string equal = ((Button)sender).Name;
-            string historyOutPut = TextToRead.Text;
+            string historyOutPut = numbers[0];
             double a = double.Parse(numbers[0]);
             double b = double.Parse(OutputTextBlock.Text);
 
             if(equal == "equal")
             {
-                if(numbers.Length < 2 && TextToRead.Text != "0")
+                if(numbers.Length < 2 || TextToRead.Text == "0")
                 {
-                     OutputTextBlock.Text = numbers[0];
-                     output = numbers[0];
+                    output = "0";
+                    OutputTextBlock.Text = output;
+                    return;
                 }
                 else
                 {
@@ -133,13 +155,13 @@ namespace Calculator
                     switch(numbers[1])
                     {
                         case "+":
-                            output = (a + b).ToString();
+                            readOutput = (a + b).ToString();
                             break;
                         case "-":
-                            output = (a - b).ToString();
+                            readOutput = (a - b).ToString();
                             break;
                         case "x":
-                            output = (a * b).ToString();
+                            readOutput = (a * b).ToString();
                             break;
                         case "/":
                             if (double.Parse(OutputTextBlock.Text) == 0)
@@ -149,17 +171,17 @@ namespace Calculator
                                 return;
                             }
 
-                            output = (a / b).ToString();
+                            readOutput = (a / b).ToString();
                             break;
                     }
 
-                    if (output.Length < 12)
-                        OutputTextBlock.Text = output;
+                    if (readOutput.Length < 18)
+                        TextToRead.Text = readOutput;
                     else
-                        output = historyOutPut;
+                        readOutput = historyOutPut;
 
-                    readOutput = "0";
-                    TextToRead.Text = readOutput;
+                    output = "0";
+                    OutputTextBlock.Text = output;
 
                 }
             }
@@ -210,21 +232,21 @@ namespace Calculator
                     switch (((Button)sender).Name)
                     {
                         case "plus":
-                            readOutput = OutputTextBlock.Text + " +";
+                            readOutput = output.ToString() + " +";
                             break;
                         case "minus":
-                            readOutput = OutputTextBlock.Text + " -";
+                            readOutput = output.ToString() + " -";
                             break;
                         case "division":
-                            readOutput = OutputTextBlock.Text + " /";
+                            readOutput = output.ToString() + " /";
                             break;
                         case "multiplication":
-                            readOutput = OutputTextBlock.Text + " x";
+                            readOutput = output.ToString() + " x";
                             break;
                     }
                 }
 
-                if(readOutput.Length < 12)
+                if(readOutput.Length <= 17)
                 {
                     TextToRead.Text = readOutput;
                     OutputTextBlock.Text = "0";
@@ -232,8 +254,9 @@ namespace Calculator
                 else
                 {
                     TextToRead.Text = historyOutPut;
+                    readOutput = historyOutPut;
                 }
-                output = "";
+                output = "0";
                 operation = ((Button)sender).Name;
             }
         }
