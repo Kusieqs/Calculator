@@ -32,7 +32,7 @@ namespace Calculator
         {
             
             string name = ((Button)sender).Name;
-            if (output.Length <= 9)
+            if (output.Length <= 8)
             {
                 switch (name)
                 {
@@ -71,7 +71,6 @@ namespace Calculator
                 }
                 output = Convert.ToDouble(output).ToString();
                 OutputTextBlock.Text = output;
-                /// max 9 liczb
             }
         }
         private void Clear(object sender, RoutedEventArgs e)
@@ -99,7 +98,7 @@ namespace Calculator
         private void MinusOrPlus(object sender, RoutedEventArgs e)
         {
 
-            if (OutputTextBlock.Text != "0" && OutputTextBlock.Text.Length < 10)
+            if (OutputTextBlock.Text != "0")
             {
                 double parse = double.Parse(OutputTextBlock.Text);
                 parse = parse * -1;
@@ -110,7 +109,7 @@ namespace Calculator
 
         private void Comma(object sender, RoutedEventArgs e)
         {
-            if(OutputTextBlock.Text.Length < 9)
+            if (OutputTextBlock.Text.Length < 9 && !OutputTextBlock.Text.Contains(',')) 
             {
                 output += ',';
                 OutputTextBlock.Text = output;
@@ -255,6 +254,8 @@ namespace Calculator
                 {
                     TextToRead.Text = historyOutPut;
                     readOutput = historyOutPut;
+                    MessageBox.Show("Length of numbers are to big", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    OutputTextBlock.Text = "0";
                 }
                 output = "0";
                 operation = ((Button)sender).Name;
