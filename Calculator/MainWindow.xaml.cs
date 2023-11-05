@@ -30,45 +30,11 @@ namespace Calculator
 
         private void NumberMethod(object sender, RoutedEventArgs e)
         {
-            
+            Button btn = (Button)sender;
             string name = ((Button)sender).Name;
             if (output.Length <= 8)
             {
-                switch (name)
-                {
-                    case "One":
-                        output += "1";
-                        break;
-                    case "Two":
-                        output += "2";
-                        break;
-                    case "Three":
-                        output += "3";
-                        break;
-                    case "Four":
-                        output += "4";
-                        break;
-                    case "Five":
-                        output += "5";
-                        break;
-                    case "Six":
-                        output += "6";
-                        break;
-                    case "Seven":
-                        output += "7";
-                        break;
-                    case "Eight":
-                        output += "8";
-                        break;
-                    case "Nine":
-                        output += "9";
-                        break;
-                    case "Zero":
-                        output += "0";
-                        break;
-
-
-                }
+                output += btn.Content;
                 output = Convert.ToDouble(output).ToString();
                 OutputTextBlock.Text = output;
             }
