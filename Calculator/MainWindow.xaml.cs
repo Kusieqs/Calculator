@@ -99,132 +99,56 @@ namespace Calculator
             {
                 output = "0";
             }
+        }
 
-            string[] numbers = TextToRead.Text.Split(' ');
-            string equal = ((Button)sender).Name;
-            string historyOutPut = numbers[0];
-            double a = double.Parse(numbers[0]);
-            double b = double.Parse(OutputTextBlock.Text);
 
-            if(equal == "equal")
+
+        private void Operation(object sender, RoutedEventArgs e)
+        {
+
+            string operation = ((Button)sender).Content.ToString();
+
+            if (OutputTextBlock.Text == "0" && TextToRead.Text.Split(' ')[1] == "/")
             {
-                if(numbers.Length < 2 || TextToRead.Text == "0")
-                {
-                    output = "0";
-                    OutputTextBlock.Text = output;
-                    return;
-                }
-                else
-                {
+                MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
-                    switch(numbers[1])
-                    {
-                        case "+":
-                            readOutput = (a + b).ToString();
-                            break;
-                        case "-":
-                            readOutput = (a - b).ToString();
-                            break;
-                        case "x":
-                            readOutput = (a * b).ToString();
-                            break;
-                        case "/":
-                            if (double.Parse(OutputTextBlock.Text) == 0)
-                            {
-                                MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                output = "";
-                                return;
-                            }
 
-                            readOutput = (a / b).ToString();
-                            break;
-                    }
-
-                    if (readOutput.Length < 18)
-                        TextToRead.Text = readOutput;
-                    else
-                        readOutput = historyOutPut;
-
-                    output = "0";
-                    OutputTextBlock.Text = output;
-
-                }
+            if (TextToRead.Text.Split(' ').Length == 2)
+            {
+                Calculate();
+                TextToRead.Text = TextToRead.Text + " " + operation;
+                output = "";
+                OutputTextBlock.Text = "0";
             }
             else
             {
-                if (numbers.Length == 2)
-                {
-                    switch (operation)
-                    {
-                        case "plus":
-                            readOutput = (a + b).ToString();
-                            break;
-                        case "minus":
-                            readOutput = (a - b).ToString();
-                            break;
-                        case "division":
-                            if (double.Parse(OutputTextBlock.Text) == 0)
-                            {
-                                MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                output = "";
-                                return;
-                            }
-                            readOutput = (a / b).ToString();
-                            break;
-                        case "multiplication":
-                            readOutput = (a * b).ToString();
-                            break;
-                    }
+                TextToRead.Text = OutputTextBlock.Text + " " + operation;
+                output = "";
+                OutputTextBlock.Text = "0";
+            }
+        }
+        private void Calculate()
+        {
+            double a = double.Parse(TextToRead.Text.Split(' ')[0]);
+            double b = double.Parse(OutputTextBlock.Text);
 
-                    switch (((Button)sender).Name)
-                    {
-                        case "plus":
-                            readOutput += " +";
-                            break;
-                        case "minus":
-                            readOutput += " -";
-                            break;
-                        case "division":
-                            readOutput += " /";
-                            break;
-                        case "multiplication":
-                            readOutput += " x";
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (((Button)sender).Name)
-                    {
-                        case "plus":
-                            readOutput = output.ToString() + " +";
-                            break;
-                        case "minus":
-                            readOutput = output.ToString() + " -";
-                            break;
-                        case "division":
-                            readOutput = output.ToString() + " /";
-                            break;
-                        case "multiplication":
-                            readOutput = output.ToString() + " x";
-                            break;
-                    }
-                }
-
-                if(readOutput.Length <= 17)
-                {
-                    TextToRead.Text = readOutput;
-                    OutputTextBlock.Text = "0";
-                }
-                else
-                {
-                    TextToRead.Text = historyOutPut;
-                    readOutput = historyOutPut;
-                    MessageBox.Show("Length of numbers are to big", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    OutputTextBlock.Text = "0";
-                }
-                output = "0";
-                operation = ((Button)sender).Name;
+            string operation = TextToRead.Text.Split(' ')[1];
+            switch(operation)
+            {
+                case "+":
+                    TextToRead.Text = (a + b).ToString();
+                    break;
+                case "-":
+                    TextToRead.Text = (a - b).ToString();
+                    break;
+                case "/":
+                    TextToRead.Text = (a / b).ToString();
+                    break;
+                case "x":
+                    TextToRead.Text = (a * b).ToString();
+                    break;
             }
         }
     }

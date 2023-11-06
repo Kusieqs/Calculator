@@ -48,10 +48,10 @@
         <Button x:Name="C" Content="C" Grid.Column="0" Grid.Row="3" FontSize ="40" FontWeight="Bold" Margin="7,7,8,7" Background="#FF5B3A3A" Foreground="White" Click="Clear"/>
         <Button x:Name="comma" Content="," Grid.Column="2" Grid.Row="7" FontSize ="40" FontWeight="Bold" Margin="7,7,6,7" Background="#FF5B3A3A" Foreground="White" Click="Comma" Grid.ColumnSpan="2"/>
         <Button x:Name="equal" Content="=" Grid.Column="4" Grid.Row="7" FontSize="40" FontWeight="Bold" Margin="8,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="NumberEqual"/>
-        <Button x:Name="plus" Content="+" Grid.Column="4" Grid.Row="6" FontSize="40" FontWeight="Bold" Margin="8,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="NumberEqual"/>
-        <Button x:Name="minus" Content="-" Grid.Column="4" Grid.Row="5" FontSize="40" FontWeight="Bold" Margin="8,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="NumberEqual"/>
-        <Button x:Name="multiplication" Content="x" Grid.Column="4" Grid.Row="4" FontSize="40" FontWeight="Bold" Margin="8,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="NumberEqual"/>
-        <Button x:Name="division" Content="/" Grid.Column="4" Grid.Row="3" FontSize ="40" FontWeight="Bold" Margin="8,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="NumberEqual"/>
+        <Button x:Name="plus" Content="+" Grid.Column="4" Grid.Row="6" FontSize="40" FontWeight="Bold" Margin="8,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="Operation"/>
+        <Button x:Name="minus" Content="-" Grid.Column="4" Grid.Row="5" FontSize="40" FontWeight="Bold" Margin="8,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="Operation"/>
+        <Button x:Name="multiplication" Content="x" Grid.Column="4" Grid.Row="4" FontSize="40" FontWeight="Bold" Margin="8,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="Operation"/>
+        <Button x:Name="division" Content="/" Grid.Column="4" Grid.Row="3" FontSize ="40" FontWeight="Bold" Margin="8,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="Operation"/>
         <Button x:Name="elemnet" Content="√" Grid.Column="1" Grid.Row="3" FontSize="40" FontWeight="Bold" Margin="6,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="Element"/>
         <Button x:Name="plusMinus" Content="+/-" Grid.Column="2" Grid.Row="3" FontSize="40" FontWeight="Bold" Margin="7,7,6,7" Background="#FF5B3A3A" Foreground="White" Click="MinusOrPlus" Grid.ColumnSpan="2"/>
     </Grid>
