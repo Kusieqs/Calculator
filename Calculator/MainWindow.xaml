@@ -44,7 +44,7 @@
         <Button x:Name="Zero" Content="0" Grid.Row="7" Grid.Column="0" FontSize="40" FontWeight="SemiBold" Grid.ColumnSpan="2" Margin="7,7,7,7" Background="#FF565252" Foreground="White" Click="NumberMethod"/>
         <TextBlock Grid.Row="1" Grid.ColumnSpan="5" Background ="LightBlue"/>
         <TextBlock x:Name="TextToRead" Text="0" Grid.Column="0" Grid.ColumnSpan="5" FontWeight="SemiBold" FontSize="30" Margin="7,0,7,0" TextAlignment="Right" VerticalAlignment="Center"/>
-        <TextBlock x:Name="OutputTextBlock" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Text="0" FontSize="60" TextAlignment="Right" VerticalAlignment="Top" Margin="7,7,7,0" Grid.RowSpan="2"/>
+        <TextBlock x:Name="OutputTextBlock" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Text="" FontSize="60" TextAlignment="Right" VerticalAlignment="Top" Margin="7,7,7,0" Grid.RowSpan="2"/>
         <Button x:Name="C" Content="C" Grid.Column="0" Grid.Row="3" FontSize ="40" FontWeight="Bold" Margin="7,7,8,7" Background="#FF5B3A3A" Foreground="White" Click="Clear"/>
         <Button x:Name="comma" Content="," Grid.Column="2" Grid.Row="7" FontSize ="40" FontWeight="Bold" Margin="7,7,6,7" Background="#FF5B3A3A" Foreground="White" Click="Comma" Grid.ColumnSpan="2"/>
         <Button x:Name="equal" Content="=" Grid.Column="4" Grid.Row="7" FontSize="40" FontWeight="Bold" Margin="8,7,7,7" Background="#FF5B3A3A" Foreground="White" Click="NumberEqual"/>

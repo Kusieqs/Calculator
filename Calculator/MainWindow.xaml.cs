@@ -77,32 +77,31 @@ namespace Calculator
         {
             if (OutputTextBlock.Text.Length < 9 && !OutputTextBlock.Text.Contains(',')) 
             {
-                output += ',';
+                if(output == "")
+                {
+                    return;
+                }
+                else
+                {
+                    output += ',';
+                }
                 OutputTextBlock.Text = output;
             }
         }
-
-        private string ConvertComma(string number)
-        {
-            if (number[number.Length - 1] == ',')
-                number = number.Remove(number.Length - 1);
-            return number;
-        }
         private void NumberEqual(object sender, RoutedEventArgs e)
         {
-            if(output != "")
+            if(!string.IsNullOrEmpty(OutputTextBlock.Text) && TextToRead.Text.Split(' ').Length != 1)
             {
-                string convertedNumber = ConvertComma(output);
-                output = convertedNumber;
+                Calculate();
             }
-            else
-            {
-                output = "0";
-            }
+            
+            
+
+
+            OutputTextBlock.Text = "";
+            output = "";
+
         }
-
-
-
         private void Operation(object sender, RoutedEventArgs e)
         {
 
@@ -113,6 +112,8 @@ namespace Calculator
                 MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            else if (OutputTextBlock.Text == "")
+                return;
 
 
             if (TextToRead.Text.Split(' ').Length == 2)
@@ -120,17 +121,17 @@ namespace Calculator
                 Calculate();
                 TextToRead.Text = TextToRead.Text + " " + operation;
                 output = "";
-                OutputTextBlock.Text = "0";
+                OutputTextBlock.Text = "";
             }
             else
             {
                 TextToRead.Text = OutputTextBlock.Text + " " + operation;
                 output = "";
-                OutputTextBlock.Text = "0";
+                OutputTextBlock.Text = "";
             }
         }
         private void Calculate()
-        {
+        {   
             double a = double.Parse(TextToRead.Text.Split(' ')[0]);
             double b = double.Parse(OutputTextBlock.Text);
 
