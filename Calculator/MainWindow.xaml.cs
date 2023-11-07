@@ -19,10 +19,7 @@ namespace Calculator
 {
     public partial class MainWindow : Window
     {
-        string readOutput = "";
-        string output = "";
 
-        string operation = "";
         public MainWindow()
         {
             InitializeComponent();
@@ -32,17 +29,14 @@ namespace Calculator
         {
             Button btn = (Button)sender;
             string name = ((Button)sender).Name;
-            if (output.Length <= 8)
+            if (OutputTextBlock.Text.Length <= 8)
             {
-                output += btn.Content;
-                output = Convert.ToDouble(output).ToString();
-                OutputTextBlock.Text = output;
+                OutputTextBlock.Text += btn.Content;
+                OutputTextBlock.Text = Convert.ToDouble(OutputTextBlock.Text).ToString();
             }
         }
         private void Clear(object sender, RoutedEventArgs e)
         {
-            readOutput = "";
-            output = "";
             OutputTextBlock.Text = "0";
             TextToRead.Text = "0";
         }
@@ -53,7 +47,6 @@ namespace Calculator
                 double sqrtTwo = double.Parse(OutputTextBlock.Text);
                 sqrtTwo = Math.Sqrt(sqrtTwo);
                 OutputTextBlock.Text = Math.Round(sqrtTwo, 2).ToString();
-                output = OutputTextBlock.Text;
             }
             else
             {
@@ -69,7 +62,6 @@ namespace Calculator
                 double parse = double.Parse(OutputTextBlock.Text);
                 parse = parse * -1;
                 OutputTextBlock.Text = parse.ToString();
-                output = parse.ToString();
             }
         }
 
@@ -77,15 +69,14 @@ namespace Calculator
         {
             if (OutputTextBlock.Text.Length < 9 && !OutputTextBlock.Text.Contains(',')) 
             {
-                if(output == "")
+                if(OutputTextBlock.Text== "")
                 {
                     return;
                 }
                 else
                 {
-                    output += ',';
+                    OutputTextBlock.Text += ',';
                 }
-                OutputTextBlock.Text = output;
             }
         }
         private void NumberEqual(object sender, RoutedEventArgs e)
@@ -94,12 +85,12 @@ namespace Calculator
             {
                 Calculate();
             }
+            else
+            {
+                TextToRead.Text = TextToRead.Text.Split(' ')[0];
+            }
             
-            
-
-
             OutputTextBlock.Text = "";
-            output = "";
 
         }
         private void Operation(object sender, RoutedEventArgs e)
@@ -120,15 +111,12 @@ namespace Calculator
             {
                 Calculate();
                 TextToRead.Text = TextToRead.Text + " " + operation;
-                output = "";
-                OutputTextBlock.Text = "";
             }
             else
             {
                 TextToRead.Text = OutputTextBlock.Text + " " + operation;
-                output = "";
-                OutputTextBlock.Text = "";
             }
+            OutputTextBlock.Text = "";
         }
         private void Calculate()
         {   
