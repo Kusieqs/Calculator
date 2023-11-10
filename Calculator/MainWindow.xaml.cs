@@ -34,12 +34,12 @@ namespace Calculator
                 OutputTextBlock.Text += btn.Content;
                 OutputTextBlock.Text = Convert.ToDouble(OutputTextBlock.Text).ToString();
             }
-        }
+        } // Adding new numbers to OutputTextBlock
         private void Clear(object sender, RoutedEventArgs e)
         {
             OutputTextBlock.Text = "";
             TextToRead.Text = "0";
-        }
+        } // Clearing numbers
         private void Element(object sender, RoutedEventArgs e)
         {
             if(double.Parse(OutputTextBlock.Text) >=0)
@@ -52,7 +52,7 @@ namespace Calculator
             {
                 MessageBox.Show("You can't element a minus number", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
+        }// Elemnt OutputTextBlock
 
         private void MinusOrPlus(object sender, RoutedEventArgs e)
         {
@@ -63,7 +63,7 @@ namespace Calculator
                 parse = parse * -1;
                 OutputTextBlock.Text = parse.ToString();
             }
-        }
+        }//Changing char +/- in OutputTextBlock
 
         private void Comma(object sender, RoutedEventArgs e)
         {
@@ -78,17 +78,24 @@ namespace Calculator
                     OutputTextBlock.Text += ',';
                 }
             }
-        }
+        } //Adding comma in OutputTextBlock
         private void NumberEqual(object sender, RoutedEventArgs e)
         {
-            if(OutputTextBlock.Text == "0" && TextToRead.Text.Split(' ')[1] == "/")
+            bool toLong;
+
+            if (OutputTextBlock.Text == "0" && TextToRead.Text.Split(' ')[1] == "/")
             {
                 MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             else if(!string.IsNullOrEmpty(OutputTextBlock.Text) && TextToRead.Text.Split(' ').Length != 1)
             {
-                Calculate();
+                Calculate(out toLong);
+                if (toLong)
+                {
+                    OutputTextBlock.Text = "";
+                    return;
+                }
             }
             else
             {
@@ -97,9 +104,10 @@ namespace Calculator
             
             OutputTextBlock.Text = "";
 
-        }
+        }//Result of our action
         private void Operation(object sender, RoutedEventArgs e)
         {
+            bool toLong;
 
             string operation = ((Button)sender).Content.ToString();
 
@@ -114,7 +122,14 @@ namespace Calculator
 
             if (TextToRead.Text.Split(' ').Length == 2)
             {
-                Calculate();
+                Calculate(out toLong);
+
+                if (toLong)
+                {
+                    OutputTextBlock.Text = "";
+                    return;
+                }
+
                 TextToRead.Text = TextToRead.Text + " " + operation;
             }
             else
@@ -122,9 +137,10 @@ namespace Calculator
                 TextToRead.Text = OutputTextBlock.Text + " " + operation;
             }
             OutputTextBlock.Text = "";
-        }
-        private void Calculate()
-        {   
+        }// Adding new operator and doing action
+        private void Calculate(out bool toLong)
+        {
+
             double a = double.Parse(TextToRead.Text.Split(' ')[0]);
             double b = double.Parse(OutputTextBlock.Text);
             double result = 0;
@@ -148,12 +164,14 @@ namespace Calculator
             if(result.ToString().Length <= 12)
             {
                 TextToRead.Text = result.ToString();
+                toLong = false;
             }
             else
             {
                 MessageBox.Show("Result is to long", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                toLong = true;
             }
 
-        }
+        }//Method to counting OutputTextBlock and TextToRead
     }
 }
