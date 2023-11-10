@@ -19,10 +19,7 @@ namespace Calculator
 {
     public partial class MainWindow : Window
     {
-        string readOutput = "";
-        string output = "";
 
-        string operation = "";
         public MainWindow()
         {
             InitializeComponent();
@@ -30,56 +27,19 @@ namespace Calculator
 
         private void NumberMethod(object sender, RoutedEventArgs e)
         {
-            
+            Button btn = (Button)sender;
             string name = ((Button)sender).Name;
-            if (output.Length <= 8)
+            if (OutputTextBlock.Text.Length <= 8)
             {
-                switch (name)
-                {
-                    case "One":
-                        output += "1";
-                        break;
-                    case "Two":
-                        output += "2";
-                        break;
-                    case "Three":
-                        output += "3";
-                        break;
-                    case "Four":
-                        output += "4";
-                        break;
-                    case "Five":
-                        output += "5";
-                        break;
-                    case "Six":
-                        output += "6";
-                        break;
-                    case "Seven":
-                        output += "7";
-                        break;
-                    case "Eight":
-                        output += "8";
-                        break;
-                    case "Nine":
-                        output += "9";
-                        break;
-                    case "Zero":
-                        output += "0";
-                        break;
-
-
-                }
-                output = Convert.ToDouble(output).ToString();
-                OutputTextBlock.Text = output;
+                OutputTextBlock.Text += btn.Content;
+                OutputTextBlock.Text = Convert.ToDouble(OutputTextBlock.Text).ToString();
             }
-        }
+        } // Adding new numbers to OutputTextBlock
         private void Clear(object sender, RoutedEventArgs e)
         {
-            readOutput = "";
-            output = "";
-            OutputTextBlock.Text = "0";
+            OutputTextBlock.Text = "";
             TextToRead.Text = "0";
-        }
+        } // Clearing numbers
         private void Element(object sender, RoutedEventArgs e)
         {
             if(double.Parse(OutputTextBlock.Text) >=0)
@@ -87,179 +47,131 @@ namespace Calculator
                 double sqrtTwo = double.Parse(OutputTextBlock.Text);
                 sqrtTwo = Math.Sqrt(sqrtTwo);
                 OutputTextBlock.Text = Math.Round(sqrtTwo, 2).ToString();
-                output = OutputTextBlock.Text;
             }
             else
             {
                 MessageBox.Show("You can't element a minus number", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
+        }// Elemnt OutputTextBlock
 
         private void MinusOrPlus(object sender, RoutedEventArgs e)
         {
 
-            if (OutputTextBlock.Text != "0")
+            if (OutputTextBlock.Text != "0" && OutputTextBlock.Text != "")
             {
                 double parse = double.Parse(OutputTextBlock.Text);
                 parse = parse * -1;
                 OutputTextBlock.Text = parse.ToString();
-                output = parse.ToString();
             }
-        }
+        }//Changing char +/- in OutputTextBlock
 
         private void Comma(object sender, RoutedEventArgs e)
         {
             if (OutputTextBlock.Text.Length < 9 && !OutputTextBlock.Text.Contains(',')) 
             {
-                output += ',';
-                OutputTextBlock.Text = output;
-            }
-        }
-
-        private string ConvertComma(string number)
-        {
-            if (number[number.Length - 1] == ',')
-                number = number.Remove(number.Length - 1);
-            return number;
-        }
-        private void NumberEqual(object sender, RoutedEventArgs e)
-        {
-            if(output != "")
-            {
-                string convertedNumber = ConvertComma(output);
-                output = convertedNumber;
-            }
-            else
-            {
-                output = "0";
-            }
-
-            string[] numbers = TextToRead.Text.Split(' ');
-            string equal = ((Button)sender).Name;
-            string historyOutPut = numbers[0];
-            double a = double.Parse(numbers[0]);
-            double b = double.Parse(OutputTextBlock.Text);
-
-            if(equal == "equal")
-            {
-                if(numbers.Length < 2 || TextToRead.Text == "0")
+                if(OutputTextBlock.Text== "")
                 {
-                    output = "0";
-                    OutputTextBlock.Text = output;
                     return;
                 }
                 else
                 {
+                    OutputTextBlock.Text += ',';
+                }
+            }
+        } //Adding comma in OutputTextBlock
+        private void NumberEqual(object sender, RoutedEventArgs e)
+        {
+            bool toLong;
 
-                    switch(numbers[1])
-                    {
-                        case "+":
-                            readOutput = (a + b).ToString();
-                            break;
-                        case "-":
-                            readOutput = (a - b).ToString();
-                            break;
-                        case "x":
-                            readOutput = (a * b).ToString();
-                            break;
-                        case "/":
-                            if (double.Parse(OutputTextBlock.Text) == 0)
-                            {
-                                MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                output = "";
-                                return;
-                            }
-
-                            readOutput = (a / b).ToString();
-                            break;
-                    }
-
-                    if (readOutput.Length < 18)
-                        TextToRead.Text = readOutput;
-                    else
-                        readOutput = historyOutPut;
-
-                    output = "0";
-                    OutputTextBlock.Text = output;
-
+            if (OutputTextBlock.Text == "0" && TextToRead.Text.Split(' ')[1] == "/")
+            {
+                MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if(!string.IsNullOrEmpty(OutputTextBlock.Text) && TextToRead.Text.Split(' ').Length != 1)
+            {
+                Calculate(out toLong);
+                if (toLong)
+                {
+                    OutputTextBlock.Text = "";
+                    return;
                 }
             }
             else
             {
-                if (numbers.Length == 2)
-                {
-                    switch (operation)
-                    {
-                        case "plus":
-                            readOutput = (a + b).ToString();
-                            break;
-                        case "minus":
-                            readOutput = (a - b).ToString();
-                            break;
-                        case "division":
-                            if (double.Parse(OutputTextBlock.Text) == 0)
-                            {
-                                MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                output = "";
-                                return;
-                            }
-                            readOutput = (a / b).ToString();
-                            break;
-                        case "multiplication":
-                            readOutput = (a * b).ToString();
-                            break;
-                    }
-
-                    switch (((Button)sender).Name)
-                    {
-                        case "plus":
-                            readOutput += " +";
-                            break;
-                        case "minus":
-                            readOutput += " -";
-                            break;
-                        case "division":
-                            readOutput += " /";
-                            break;
-                        case "multiplication":
-                            readOutput += " x";
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (((Button)sender).Name)
-                    {
-                        case "plus":
-                            readOutput = output.ToString() + " +";
-                            break;
-                        case "minus":
-                            readOutput = output.ToString() + " -";
-                            break;
-                        case "division":
-                            readOutput = output.ToString() + " /";
-                            break;
-                        case "multiplication":
-                            readOutput = output.ToString() + " x";
-                            break;
-                    }
-                }
-
-                if(readOutput.Length <= 17)
-                {
-                    TextToRead.Text = readOutput;
-                    OutputTextBlock.Text = "0";
-                }
-                else
-                {
-                    TextToRead.Text = historyOutPut;
-                    readOutput = historyOutPut;
-                    MessageBox.Show("Length of numbers are to big", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    OutputTextBlock.Text = "0";
-                }
-                output = "0";
-                operation = ((Button)sender).Name;
+                TextToRead.Text = TextToRead.Text.Split(' ')[0];
             }
-        }
+            
+            OutputTextBlock.Text = "";
+
+        }//Result of our action
+        private void Operation(object sender, RoutedEventArgs e)
+        {
+            bool toLong;
+
+            string operation = ((Button)sender).Content.ToString();
+
+            if (OutputTextBlock.Text == "0" && TextToRead.Text.Split(' ')[1] == "/")
+            {
+                MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (OutputTextBlock.Text == "")
+                return;
+
+
+            if (TextToRead.Text.Split(' ').Length == 2)
+            {
+                Calculate(out toLong);
+
+                if (toLong)
+                {
+                    OutputTextBlock.Text = "";
+                    return;
+                }
+
+                TextToRead.Text = TextToRead.Text + " " + operation;
+            }
+            else
+            {
+                TextToRead.Text = OutputTextBlock.Text + " " + operation;
+            }
+            OutputTextBlock.Text = "";
+        }// Adding new operator and doing action
+        private void Calculate(out bool toLong)
+        {
+
+            double a = double.Parse(TextToRead.Text.Split(' ')[0]);
+            double b = double.Parse(OutputTextBlock.Text);
+            double result = 0;
+            string operation = TextToRead.Text.Split(' ')[1];
+            switch(operation)
+            {
+                case "+":
+                    result = (a + b);
+                    break;
+                case "-":
+                    result = (a - b); 
+                    break;
+                case "/":
+                    result = (a / b); 
+                    break;
+                case "x":
+                    result = (a * b); 
+                    break;
+            }
+            
+            if(result.ToString().Length <= 12)
+            {
+                TextToRead.Text = result.ToString();
+                toLong = false;
+            }
+            else
+            {
+                MessageBox.Show("Result is to long", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                toLong = true;
+            }
+
+        }//Method to counting OutputTextBlock and TextToRead
     }
 }
