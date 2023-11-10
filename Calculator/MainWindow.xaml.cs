@@ -37,7 +37,7 @@ namespace Calculator
         }
         private void Clear(object sender, RoutedEventArgs e)
         {
-            OutputTextBlock.Text = "0";
+            OutputTextBlock.Text = "";
             TextToRead.Text = "0";
         }
         private void Element(object sender, RoutedEventArgs e)
@@ -57,7 +57,7 @@ namespace Calculator
         private void MinusOrPlus(object sender, RoutedEventArgs e)
         {
 
-            if (OutputTextBlock.Text != "0")
+            if (OutputTextBlock.Text != "0" && OutputTextBlock.Text != "")
             {
                 double parse = double.Parse(OutputTextBlock.Text);
                 parse = parse * -1;
@@ -81,7 +81,12 @@ namespace Calculator
         }
         private void NumberEqual(object sender, RoutedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(OutputTextBlock.Text) && TextToRead.Text.Split(' ').Length != 1)
+            if(OutputTextBlock.Text == "0" && TextToRead.Text.Split(' ')[1] == "/")
+            {
+                MessageBox.Show("You can't devide by zero", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if(!string.IsNullOrEmpty(OutputTextBlock.Text) && TextToRead.Text.Split(' ').Length != 1)
             {
                 Calculate();
             }
@@ -122,23 +127,33 @@ namespace Calculator
         {   
             double a = double.Parse(TextToRead.Text.Split(' ')[0]);
             double b = double.Parse(OutputTextBlock.Text);
-
+            double result = 0;
             string operation = TextToRead.Text.Split(' ')[1];
             switch(operation)
             {
                 case "+":
-                    TextToRead.Text = (a + b).ToString();
+                    result = (a + b);
                     break;
                 case "-":
-                    TextToRead.Text = (a - b).ToString();
+                    result = (a - b); 
                     break;
                 case "/":
-                    TextToRead.Text = (a / b).ToString();
+                    result = (a / b); 
                     break;
                 case "x":
-                    TextToRead.Text = (a * b).ToString();
+                    result = (a * b); 
                     break;
             }
+            
+            if(result.ToString().Length <= 12)
+            {
+                TextToRead.Text = result.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Result is to long", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
     }
 }
